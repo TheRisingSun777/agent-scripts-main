@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+bin/
+build/
+dist/
+node_modules/
+skills/.system/
