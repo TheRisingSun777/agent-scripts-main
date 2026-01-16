@@ -19,6 +19,11 @@ Goal: maximize throughput while keeping safety: atomic commits, reversible diffs
 
 ---
 
+## Skill triggers (additions)
+- Use **combo-sync** when the user asks to sync/propagate combo changes across wardrobes or to resync combo registries/envs after a combo folder was updated.
+
+---
+
 ## One‑Take Autonomy Protocol (default for Codex/Opus)
 Agents should finish 80–90% in one pass:
 1) **Preflight**: `git status`, branch, current head.
