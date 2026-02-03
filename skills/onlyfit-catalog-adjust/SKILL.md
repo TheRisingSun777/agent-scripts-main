@@ -1,0 +1,78 @@
+---
+name: onlyfit-catalog-adjust
+description: Create or adjust ONLYFIT prompt catalogs or individual prompts. Use whenever the user asks to generate a prompt catalog, ingest unorganized catalogs, or adjust/edit catalog prompts. Enforces formatting rules (prefix/wardrobe IDs, distribution tables, quick‑jump table, and slide format) before applying user edits.
+---
+
+# ONLYFIT Catalog Adjust
+
+## Non-Negotiables — Product-First Gate
+
+1) **Product-first concept sentence (mandatory)**
+   - The first concept line must explicitly mention a Suit-61 product benefit or construction detail (fabric, fit, zipper, stitching, compression, stretch, durability, breathability, pocket design, etc.).
+   - If the first sentence is lifestyle/psychology, reject or rewrite.
+
+2) **Disallowed primary themes** (can only appear as brief context, never the core concept):
+   - Meditation/mindfulness, self-coaching, motivation/discipline, sleep optimization, family/relationship psychology, social media/progress photo rituals, music/podcast training, competition psychology, “habit formation,” lifestyle routines.
+   - If the prompt title or concept is driven by these, reject or rewrite.
+
+3) **No abstract psychology benefits unless tied to a product feature**
+   - “Confidence,” “motivation,” “discipline,” “energy” must be **directly linked** to a physical product cause (e.g., “confidence from zero-sweat fabric”). Otherwise invalid.
+
+4) **Wardrobe specificity required**
+   - The wardrobe item must be central (ZH/LS/TS/TK/BF/PO). If a prompt could apply to any apparel, it’s too generic.
+
+5) **Visual proof requirement**
+   - Every prompt must include a “proof” element (macro shot, stress test, comparison table, side-by-side, close-up seam/zipper detail). No proof = reject.
+
+## Core workflow (do in order)
+
+1. **Locate target catalogs**
+   - Determine which catalog(s) the user refers to (distilled vs regular).
+   - Use the canonical rules in `docs/Onlyfit_catalog_generation_rules.md`.
+
+2. **Validate and fix catalog format _first_**
+   - Ensure required sections exist in the catalog:
+     - Header
+     - About This Catalog
+     - Visual Style Reference block
+     - Shot Type Rules table
+     - Prefix Convention table
+     - Distribution tables (shot + wardrobe)
+     - Quick Jump table
+     - Individual slide prompt format
+     - Final Distribution Check
+     - Footer
+   - If missing, insert them based on the rules file.
+
+3. **Verify wardrobe assignments**
+   - Check each prompt’s ID prefix matches wardrobe focus.
+   - If unclear, infer wardrobe using **Wardrobe Assignment Logic** in the rules file.
+   - Fix IDs/prefixes before any other edits.
+
+4. **Apply the user’s requested edits**
+   - Only after structure and prefixes are correct.
+   - Preserve ordering and ID sequences.
+
+5. **Recalculate distribution tables**
+   - Update counts and totals to match the final catalog state.
+
+## Heuristics for wardrobe assignment
+
+Use the rules in `docs/Onlyfit_catalog_generation_rules.md` verbatim.
+If conflicts exist:
+- **Explicit wardrobe text wins** (e.g., “hoodie” → ZH).
+- If multiple garments appear, select the **primary/active garment**.
+- Bottom‑focus slides (shorts/tights/leggings/waist‑down) → `BF_`.
+- If slide shows a full set but no item focus, **assign by primary visible garment** (hoodie → `ZH_`, rashguard/long‑sleeve → `LS_`).
+- If wardrobe is unclear, minimize `Ot_` and resolve by the primary visible garment.
+- If no model, use `PO_`.
+
+## Output expectations
+
+- Maintain the exact naming scheme `[Product]_catalog_[style]_vX.Y.md`.
+- Keep prompt IDs stable unless the wardrobe prefix changes.
+- Keep UTF‑8, LF line endings, no BOM.
+
+## References
+
+- Rules source: `docs/Onlyfit_catalog_generation_rules.md`

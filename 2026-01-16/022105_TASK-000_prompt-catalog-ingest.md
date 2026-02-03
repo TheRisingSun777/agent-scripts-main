@@ -1,3 +1,30 @@
+# Oracle Pack (Offline)
+
+Generated: 2026-01-16T02:21:05
+Repo: /Users/adil/Docs/Oracle/agent-scripts-main
+Branch: main
+HEAD: 9d24e928ec2d3142e98d78c259744ab274529434
+
+## Git status
+Status: dirty
+
+```
+?? skills/image-gen/
+?? skills/mpsales-competitor-automation/
+```
+
+## Recent commits (7)
+- 9d24e92 | 2026-01-16 02:17:51 +0500 | skills: add prompt-catalog-ingest (catalog ingest)
+- b086c4c | 2026-01-09 21:46:33 +0500 | Publish control-plane agent scripts
+
+## Prompt
+Add prompt-catalog-ingest skill for catalog ingestion.
+
+## Included files
+- skills/prompt-catalog-ingest/SKILL.md
+
+## File: skills/prompt-catalog-ingest/SKILL.md
+```
 ---
 name: prompt-catalog-ingest
 description: Organize/ingest unorganized prompt catalogs into Prompt_book organized and distilled catalogs (split by prompt ID). Use when asked to populate, ingest, or update prompt catalogs from unorganized sources, create distilled variants, or sync new versioned catalogs across models/wardrobes/clothes.
@@ -8,16 +35,6 @@ description: Organize/ingest unorganized prompt catalogs into Prompt_book organi
 Use this skill when converting unorganized catalog files into structured Prompt_book catalogs (organized + distilled) without changing prompt wording.
 
 ## Workflow (Sequential)
-
-## Catalog-level tables to exclude from per-prompt output (MANDATORY)
-
-When ingesting catalogs, **do not** embed catalog-level tables in individual prompt files. If present in the unorganized source, strip these sections from the global block and from any prompt body before writing outputs:
-- `## Shot Type Rules (MANDATORY)` and its table
-- `## Wardrobe Distribution` (any variant suffix like `(V10.7)`)
-- `## Quick Jump — ...` tables
-
-These are catalog-only references and degrade prompt generation when repeated inside each prompt.
-
 
 1) **Locate unorganized inputs**
    - Find unorganized catalogs in `docs/Prompt_catalogs_unorganized/<model>/<date>/`.
@@ -35,15 +52,7 @@ These are catalog-only references and degrade prompt generation when repeated in
    - Extract the prompt body **exactly as written**, excluding only outer wrappers like code fences.
    - Do **not** rewrite wording, fix typos, translate, or reformat content unless explicitly asked.
 
-4) **Extract global catalog rules block (if present)**
-   - If the unorganized catalog includes a single global block with UI/typography/background/environment specs,
-     capture it as `GLOBAL_RULES_BLOCK`.
-   - Prepend `GLOBAL_RULES_BLOCK` to **each** prompt body when writing organized prompt files so each prompt
-     carries the full parent catalog context.
-   - Prefer using the helper script:
-     - `scripts/inject_global_rules.py --catalog <unorganized.md> --prompt-dir <Prompt_book/.../catalog_...>`
-
-5) **Apply allowed normalizations (only if requested)**
+4) **Apply allowed normalizations (only if requested)**
    - Remove `1500×1500` mentions when instructed.
    - Add a Style Reference block at top:
      - `## Style Reference`
@@ -61,8 +70,7 @@ These are catalog-only references and degrade prompt generation when repeated in
 
 6) **Write distilled catalogs**
    - Output path: `Prompt_book/<model>/distilled/catalog_<version>/<ID>.md`
-   - Distill rule: **remove Environment and Background sections** (e.g., `### ENVIRONMENT`, `### BACKGROUND`) and their content until the next `###` heading.
-   - If `GLOBAL_RULES_BLOCK` was prepended, remove any Environment/Background sections inside it as well.
+   - Distill rule: **remove Background sections** (e.g., `### Background` / `### BACKGROUND` blocks) and their content until the next `###` heading.
    - Preserve all other content exactly.
 
 7) **Validate**
@@ -86,8 +94,4 @@ These are catalog-only references and degrade prompt generation when repeated in
 - Do not change prompt wording unless explicitly requested.
 - Do not delete images or unrelated prompt catalogs without confirmation.
 - If unsure about mappings, ask for clarification instead of guessing.
-
-## Coordination Rule (Mandatory)
-
-- When the user asks for **catalog or prompt ingestion/update**, invoke the **onlyfit-catalog-adjust** skill in the same turn.
-- Use that skill’s formatting + wardrobe‑assignment checks **before** writing output files, to prevent wardrobe leakage.
+```
