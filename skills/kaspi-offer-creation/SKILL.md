@@ -14,6 +14,10 @@ Use this skill whenever the user asks to create, update, or troubleshoot Kaspi *
    - Default templates live in this skill under `templates/`
    - If the user provides a template path, read that instead.
 3) **Use excel-safe-ops** for all XLSM edits (backup, no renames, atomic write).
+4) **Heavy ZIPs must be external**:
+   - store ZIPs under:
+     `/Users/adil/Documents/useful tables/Main crm spreadsheets/main tables/External_database/kaspi_offer_uploads/<MODEL>/<CATEGORY>/<YYYY-MM-DD_HHMMSS>/`
+   - never keep large ZIPs inside the repo.
 
 ## Quick workflow (minimal)
 1) Validate required fields using `attributes` row 1.
